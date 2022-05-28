@@ -23,7 +23,7 @@ try
 }
 catch (Exception)
 {
-    System.Console.WriteLine("Impossible de démarrer le serveur");
+    System.Console.WriteLine("Cannot start the server");
     Environment.Exit(-1);
 }
 
@@ -35,12 +35,14 @@ try
 
         if (clientSocket.RemoteEndPoint is not null)
         {
-            Console.WriteLine("Client connecté depuis: " + clientSocket.RemoteEndPoint.ToString());
+            Console.WriteLine("Client connected from: " + clientSocket.RemoteEndPoint.ToString());
+
             var client = new Client
             {
                 socket = clientSocket,
                 id = Guid.NewGuid()
             };
+            
             clients.Add(client);
             Thread t = new Thread(listenClient);
             t.IsBackground = true;
@@ -50,7 +52,7 @@ try
 }
 catch (Exception)
 {
-    System.Console.WriteLine("Impossible de communiquer avec le client");
+    System.Console.WriteLine("Cannot communicate with client");
 }
 finally
 {
@@ -100,7 +102,7 @@ void listenClient(object? obj)
                         }
                         catch (System.Exception)
                         {
-                            System.Console.WriteLine($"Cqnnot send messqge to {c.username}");
+                            System.Console.WriteLine($"Cannot send message to {c.username}");
                         }
                     }
                 }
@@ -112,7 +114,7 @@ void listenClient(object? obj)
         }
         catch (System.Exception)
         {
-            Console.WriteLine($"{client.username} déconnecter.");
+            Console.WriteLine($"{client.username} disconnected.");
         }
         finally
         {
